@@ -13,12 +13,11 @@
 # limitations under the License.
 
 # [START gke_boa_kubernetes_manifests_ledger_db_statefulset_ledger_db]
-kind: StatefulSet
+kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: ledger-db
 spec:
-  serviceName: "ledger-db"
   replicas: 1
   selector:
     matchLabels:
