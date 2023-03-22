@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+#    alb.ingress.kubernetes.io/subnets: subnet-0a415c179e20b669d, subnet-0cefb34ff36558661, subnet-077fde6f4a266e8d2
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: frontend
+              port:
+                number: 80

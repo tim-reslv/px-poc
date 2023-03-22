@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: alpine
+  name: alpine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alpine
+  template:
+    metadata:
+      labels:
+        app: alpine
+    spec:
+      containers:
+      - name: alpine
+        image: alpine:latest
+        command: [ "/bin/sh", "-c" ]
+        args: # 每十秒定時向 /html/index.html 寫入資料
+          - while true; do
+            sleep 10;
+            done
+        volumeMounts:
+        - mountPath: /html
+          name: html
+      volumes:
+      - name: html
+        persistentVolumeClaim:
+          claimName: readwritemany-pvc
+          readOnly: false

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: html
+      volumes:
+      - name: html
+        persistentVolumeClaim:
+          claimName: readwritemany-pvc
+          readOnly: false

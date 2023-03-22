@@ -1,0 +1,15 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: readwritemany-pvc
+  annotations:
+    volume.beta.kubernetes.io/storage-class: px-csi-db
+  labels:
+    app: nginx
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+

@@ -1,0 +1,22 @@
+apiVersion: autopilot.libopenstorage.org/v1alpha1
+kind: AutopilotRule
+metadata:
+  name: pool-expand-till-450
+spec:
+  enforcement: required
+  ##### conditions are the symptoms to evaluate.
+  conditions:
+    expressions:
+    # pool size is less than 450 GiB
+    - key: "px_pool_stats_total_bytes/(1024*1024*1024)"
+      operator: Lt
+      values:
+        - "450"
+  ##### action to perform when condition is true
+  actions:
+    - name: "openstorage.io.action.storagepool/expand"
+      params:
+        # resize pool by scalepercentage of current size. The 100% shown below will double the current pool size.
+        scalepercentage: "100"
+        # when scaling, add disks to the pool
+        scaletype: "add-disk"
